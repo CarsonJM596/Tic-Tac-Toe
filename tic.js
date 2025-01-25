@@ -41,34 +41,40 @@ function changePlayer(){
     status.textContent = `${currPlayer}'s turn`;
 }
 function checkWin(){
-    let round1 = false;
+    let roundWon = false;
+
     for(let i = 0;  i < winCon.length; i++){
         const con = winCon[i];
         const cellA = options[con[0]];
         const cellB = options[con[1]];
         const cellC = options[con[2]];
 
-        if (cellA == "" || cellB == "" || cellC == ""){
+        if (cellA == "" || cellB == "" || cellC == ""){ //If surrounding cells are empty, continue
             continue;
         }
-        if (cellA == cellB && cellB == cellC){
+        if (cellA == cellB && cellB == cellC){ //If surrounding cells are equal round has been won
             roundWon = true;
             break;
         }
     }
 
-    if (roundWon){
+    if (roundWon){ //If round won then current player has won 
         status.textContent = `${currPlayer} wins!`;
         running = false;
+        restartGame();
     }
-    else if(!options.includes("")){
+    else if(!options.includes("")){ //If there are no empty spaces then it's a draw
         status.textContent = `It's a draw!`;
         running = false;
     }
-    else{
+    else { //Otherwse its next players turn 
         changePlayer();
     }
 }
 function restartGame(){
-
+    currPlayer = "X";
+    options = ["", "", "", "", "", "", "", "", "",]
+    status.textContent = `${currPlayer}'s turn`;
+    cell.forEach(cell => cell.textContent = "");
+    running = true;
 }
